@@ -16,7 +16,7 @@ body{
     transition: background 0.3s;
 }
 
-/* Переключатель языков */
+
 .lang-switcher {
     position: fixed;
     top: 15px;
@@ -220,7 +220,7 @@ body{
 
 <body>
 
-<!-- Переключатель языков -->
+
 <div class="lang-switcher">
   <button class="lang-btn" data-lang="ru" onclick="setLanguage('ru')">RU</button>
   <button class="lang-btn" data-lang="en" onclick="setLanguage('en')">EN</button>
@@ -293,7 +293,7 @@ body{
 </div>
 
 <script>
-  // 1. Словарь переводов
+ 
   const translations = {
     ru: {
       title: "Моя страница с карточками",
@@ -321,9 +321,9 @@ body{
     }
   };
 
-  // 2. Функция переключения языка
+  
   function setLanguage(lang) {
-    // Обновляем все элементы с атрибутом data-i18n
+    
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
       if (translations[lang] && translations[lang][key]) {
@@ -331,19 +331,19 @@ body{
       }
     });
 
-    // Сохраняем выбор в localStorage
+    
     localStorage.setItem('preferred_lang', lang);
     
-    // Обновляем стиль кнопок
+    
     document.querySelectorAll('.lang-btn').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.lang === lang);
     });
 
-    // Меняем атрибут lang у html
+    
     document.documentElement.lang = lang;
   }
 
-  // 3. Инициализация при загрузке
+ 
   document.addEventListener('DOMContentLoaded', () => {
     const saved = localStorage.getItem('preferred_lang') || 'ru';
     setLanguage(saved);
