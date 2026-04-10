@@ -2,7 +2,19 @@
 <html language="ru">
 <head>
 <title>Моя страница с карточками</title>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*{ box-sizing: border-box; }
+body{
+    font-family: Arial, sans-serif;
+    background:#e8e8e8;
+    text-align:center;
+    margin:0;
+    padding:20px 10px;
+    color:#222;
+    transition: background 0.3s;
+}
 <style>
 
 *{ box-sizing: border-box; }
