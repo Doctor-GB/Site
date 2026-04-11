@@ -6,7 +6,7 @@
   <title data-i18n="ui.page_title">Моя страница с карточками</title>
   <style>
     :root {
-      /* Цветовые токены для синхронизации с Figma Styles */
+     
       --bg-page: #e8e8e8;
       --text-main: #222;
       --font-main: Arial, sans-serif;
@@ -22,7 +22,7 @@
     .big h3{ margin:0 0 10px 0; font-size:15px; padding-bottom:4px; border-bottom:1px solid #ddd; width:100%; }
     .small{ padding:7px 12px; margin:4px; font-size:13px; font-weight:bold; transition: all 0.2s; cursor:default; display:inline-flex; align-items:center; justify-content:center; text-align:center; white-space:nowrap; min-width:60px; max-width:90%; box-sizing:border-box; }
     
-    /* Карточки */
+    
     .b1{border:2px dashed #aaa; border-radius:18px; background:#fff; box-shadow:5px 5px 0 #ccc;} .b1:hover{transform:translateY(-4px); box-shadow:3px 3px 0 #999;}
     .b2{border:3px double #7ba7bc; border-radius:10px 25px; background:radial-gradient(circle at top left,#f8fbfd,#e4eff5); box-shadow:0 8px 16px rgba(100,150,180,0.2);} .b2:hover{transform:scale(1.04);}
     .b3{border-left:5px solid #4a90e2; border-radius:6px; background:#fff; box-shadow:-3px 4px 10px rgba(74,144,226,0.25);} .b3:hover{transform:rotate(-1deg);}
@@ -64,7 +64,7 @@
     .b39{border:2px ridge #fab1a0; border-radius:8px; background:#fff; box-shadow:5px 5px 0 #ddd;} .b39:hover{transform:translate(-2px,-2px); box-shadow:2px 2px 0 #bbb;}
     .b40{border:3px solid #e84393; border-radius:0 14px 14px 0; background:linear-gradient(135deg,#fff0f5,#ffe6ee); box-shadow:-4px 4px 14px rgba(232,67,147,0.2);} .b40:hover{transform:scale(1.02); filter:contrast(1.05);}
 
-    /* Теги */
+    
     .sm1{background:#ffd6d6; border-radius:8px; border:2px solid #ff9999; box-shadow:0 2px 4px rgba(255,150,150,0.4);} .sm1:hover{background:#ffcccc; transform:scale(1.08);}
     .sm2{background:#d6ffd6; border-radius:20px; border:2px dashed #99cc99; box-shadow:0 3px 6px rgba(150,200,150,0.3);} .sm2:hover{transform:rotate(10deg); border-color:#66b366;}
     .sm3{background:#d6e3ff; border-radius:4px 12px 12px 4px; border-left:3px solid #7799cc; box-shadow:inset 0 0 5px rgba(119,153,204,0.2);} .sm3:hover{padding-left:16px; border-left-width:5px;}
@@ -92,7 +92,7 @@
     .sec3{background:linear-gradient(180deg,#f8f8ff,#eaf0ff); padding:20px; border-radius:16px; box-shadow:0 5px 20px rgba(130,140,200,0.15); border:1px solid #d0d8f5;}
     .sec4{background:linear-gradient(180deg,#fffff8,#fff7e6); padding:20px; border-radius:16px; box-shadow:0 5px 20px rgba(200,180,130,0.15); border:1px solid #f5ecd0;}
 
-    /* Переключатель */
+   
     .lang-switcher { position: fixed; top: 15px; right: 15px; display: flex; gap: 6px; z-index: 1000; background: rgba(255,255,255,0.9); padding: 6px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
     .lang-btn { padding: 6px 14px; border: 2px solid #ccc; background: #fff; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 13px; transition: all 0.2s ease; }
     .lang-btn:hover { background: #f0f0f0; }
@@ -173,7 +173,7 @@
   </div>
 
   <script>
-    // 🌐 ЦЕНТРАЛИЗОВАННЫЙ СЛОВАРЬ (i18n)
+    
     const i18n = {
       ru: {
         ui: { page_title: "Моя страница с карточками", btn_ru: "RU", btn_en: "EN", main_title: "Моя страница с карточками" },
@@ -189,7 +189,7 @@
       }
     };
 
-    // 🔄 Функция переключения
+    
     function setLanguage(lang) {
       if (!i18n[lang]) return;
       const dict = i18n[lang];
@@ -209,7 +209,7 @@
       });
     }
 
-    // 🚀 Инициализация
+    
     document.addEventListener('DOMContentLoaded', () => {
       const saved = localStorage.getItem('lang') || 'ru';
       setLanguage(saved);
