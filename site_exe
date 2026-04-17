@@ -1,219 +1,251 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" dir="ltr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title data-i18n="ui.page_title">Моя страница с карточками</title>
-  <style>
-    :root {
-     
-      --bg-page: #e8e8e8;
-      --text-main: #222;
-      --font-main: Arial, sans-serif;
-      --radius-card: 16px;
-      --shadow-soft: 0 5px 20px rgba(0,0,0,0.12);
-    }
-    *{ box-sizing: border-box; }
-    body{ font-family: var(--font-main); background:var(--bg-page); text-align:center; margin:0; padding:20px 10px; color:var(--text-main); }
-    .section{ max-width:1200px; margin:25px auto; padding:10px; }
-    .section-title{ margin-bottom:15px; font-size:18px; text-transform:uppercase; letter-spacing:2px; }
-    .cards{ display:flex; justify-content:center; gap:16px; flex-wrap:wrap; }
-    .big{ width:260px; min-height:180px; padding:14px; transition: all 0.25s ease; cursor:default; display:flex; flex-direction:column; align-items:center; }
-    .big h3{ margin:0 0 10px 0; font-size:15px; padding-bottom:4px; border-bottom:1px solid #ddd; width:100%; }
-    .small{ padding:7px 12px; margin:4px; font-size:13px; font-weight:bold; transition: all 0.2s; cursor:default; display:inline-flex; align-items:center; justify-content:center; text-align:center; white-space:nowrap; min-width:60px; max-width:90%; box-sizing:border-box; }
-    
-    
-    .b1{border:2px dashed #aaa; border-radius:18px; background:#fff; box-shadow:5px 5px 0 #ccc;} .b1:hover{transform:translateY(-4px); box-shadow:3px 3px 0 #999;}
-    .b2{border:3px double #7ba7bc; border-radius:10px 25px; background:radial-gradient(circle at top left,#f8fbfd,#e4eff5); box-shadow:0 8px 16px rgba(100,150,180,0.2);} .b2:hover{transform:scale(1.04);}
-    .b3{border-left:5px solid #4a90e2; border-radius:6px; background:#fff; box-shadow:-3px 4px 10px rgba(74,144,226,0.25);} .b3:hover{transform:rotate(-1deg);}
-    .b4{outline:3px solid #e74c3c; border-radius:15px; background:linear-gradient(135deg,#fff0ee,#ffe0dd); box-shadow:inset 0 0 12px rgba(231,76,60,0.1);} .b4:hover{outline-color:#c0392b; transform:skewX(2deg);}
-    .b5{border:2px solid transparent; background-clip:padding-box; box-shadow:0 0 0 2px #2ecc71, 0 6px 14px rgba(46,204,113,0.25); border-radius:14px;} .b5:hover{box-shadow:0 0 0 3px #27ae60, 0 10px 20px rgba(46,204,113,0.35);}
-    .b6{border-top:6px solid #9b59b6; border-radius:4px; background:linear-gradient(to bottom,#fff,#f4f0f9); box-shadow:0 5px 0 #ddd;} .b6:hover{transform:translateY(-2px); box-shadow:0 7px 0 #ccc;}
-    .b7{border:1px dotted #666; border-radius:20px; background:#f9f9f9; box-shadow:inset 0 0 8px rgba(0,0,0,0.06);} .b7:hover{border-style:solid; transform:scale(0.98);}
-    .b8{border:2px groove #333; border-radius:12px; background:#fff; box-shadow:4px 4px 12px rgba(0,0,0,0.2);} .b8:hover{transform:rotate(1deg) scale(1.02);}
-    .b9{border:3px ridge #d4af37; border-radius:8px; background:linear-gradient(45deg,#fff8e1,#fff); box-shadow:0 10px 18px rgba(212,175,55,0.2);} .b9:hover{filter:brightness(0.96); transform:translateX(3px);}
-    .b10{border-bottom:4px dashed #34495e; border-radius:25px 8px; background:#fff; box-shadow:0 4px 10px rgba(52,73,94,0.15);} .b10:hover{border-bottom-color:#2c3e50; transform:translateY(2px);}
-    .b11{border:2px inset #888; border-radius:10px; background:#f2f2f2; box-shadow:0 0 6px rgba(0,0,0,0.1);} .b11:hover{border-style:outset; background:#e9e9e9;}
-    .b12{border:1px solid #00cec9; border-radius:30% 70% 70% 30% / 30% 30% 70% 70%; background:linear-gradient(to right,#e0f7fa,#b2ebf2); box-shadow:0 8px 20px rgba(0,206,201,0.2);} .b12:hover{border-radius:14px; transform:scale(1.04);}
-    .b13{border:4px double #ff7675; border-radius:16px; background:#fff; box-shadow:6px 6px 14px rgba(255,118,117,0.18);} .b13:hover{border-style:solid; transform:rotate(-1.5deg);}
-    .b14{border:2px solid #636e72; border-radius:0 22px 0 22px; background:radial-gradient(ellipse at center,#dfe6e9,#b2bec3); box-shadow:-4px -4px 12px rgba(99,110,114,0.25);} .b14:hover{transform:translate(-2px,-2px); border-color:#2d3436;}
-    .b15{border-top:3px solid #fd79a8; border-left:3px solid #fd79a8; border-radius:8px; background:linear-gradient(160deg,#fff0f6,#fff); box-shadow:4px 4px 0 #fd79a8;} .b15:hover{transform:translate(3px,3px); box-shadow:0 0 0 #fd79a8;}
-    .b16{border:2px dashed #a29bfe; border-radius:28px; background:#fff; box-shadow:0 14px 26px rgba(162,155,254,0.22);} .b16:hover{border-style:solid; transform:scale(1.03) rotate(1deg);}
-    .b17{border:3px solid #00b894; border-radius:6px 6px 20px 6px; background:linear-gradient(to bottom right,#f0fff4,#e6ffed); box-shadow:0 6px 12px rgba(0,184,148,0.2);} .b17:hover{transform:skewY(-1.5deg); box-shadow:2px 8px 16px rgba(0,184,148,0.3);}
-    .b18{outline:2px dotted #e17055; border-radius:50px; background:linear-gradient(45deg,#fff5ee,#ffe8d6); box-shadow:0 5px 10px rgba(225,112,85,0.25);} .b18:hover{outline-style:solid; transform:scale(1.05);}
-    .b19{border:1px solid #fdcb6e; border-radius:12px 0 12px 0; background:#fffdf2; box-shadow:inset 0 0 10px rgba(253,203,110,0.3);} .b19:hover{background:#fff8e1; transform:translateX(-2px);}
-    .b20{border:2px solid #74b9ff; border-radius:8px; background:linear-gradient(135deg,#f0f8ff,#d9ecff); box-shadow:-5px 5px 12px rgba(116,185,255,0.25);} .b20:hover{transform:translateY(-4px); filter:contrast(1.05);}
-    .b21{border:3px double #a29bfe; border-radius:15px; background:#fff; box-shadow:4px 4px 0 #dfe6e9;} .b21:hover{border-color:#6c5ce7; transform:scale(1.02);}
-    .b22{border:1px dashed #00cec9; border-radius:20px 5px 20px 5px; background:#f8ffff; box-shadow:0 8px 16px rgba(0,206,201,0.15);} .b22:hover{border-style:solid; transform:rotate(1.5deg);}
-    .b23{border-left:4px solid #e84393; border-radius:0 10px 10px 0; background:#fff; box-shadow:3px 3px 10px rgba(232,67,147,0.2);} .b23:hover{transform:translateX(2px); border-left-width:6px;}
-    .b24{border:2px outset #636e72; border-radius:10px; background:#f5f5f5; box-shadow:inset 0 0 6px rgba(0,0,0,0.05);} .b24:hover{border-style:inset; background:#eaeaea;}
-    .b25{outline:3px solid #fdcb6e; border-radius:12px 12px 24px 12px; background:linear-gradient(to top,#fffde7,#fff9c4); box-shadow:0 6px 14px rgba(253,203,110,0.3);} .b25:hover{outline-color:#e1b12c; transform:scale(1.04);}
-    .b26{border:2px solid #55efc4; border-radius:6px; background:#fff; box-shadow:-4px 6px 14px rgba(85,239,196,0.25);} .b26:hover{transform:translate(-1px,1px); box-shadow:0 2px 6px rgba(85,239,196,0.3);}
-    .b27{border-top:5px dotted #fab1a0; border-radius:14px; background:#fff8f6; box-shadow:0 10px 20px rgba(250,177,160,0.2);} .b27:hover{border-top-color:#ff7675; transform:rotate(-1deg);}
-    .b28{border:1px solid #74b9ff; border-radius:15px 5px 15px 5px; background:linear-gradient(45deg,#f0f8ff,#d9ecff); box-shadow:0 4px 12px rgba(116,185,255,0.2);} .b28:hover{border-radius:8px; transform:skewX(-1.5deg);}
-    .b29{border:3px ridge #a29bfe; border-radius:8px; background:#fff; box-shadow:5px 5px 0 #ccc;} .b29:hover{transform:translateY(-2px); box-shadow:3px 3px 0 #999;}
-    .b30{border:2px solid #fd79a8; border-radius:0 16px 16px 0; background:linear-gradient(135deg,#fff0f5,#ffe6ee); box-shadow:-3px 3px 10px rgba(253,121,168,0.2);} .b30:hover{transform:scale(1.03); filter:brightness(0.98);}
-    .b31{border:4px double #00b894; border-radius:12px; background:#f0fff4; box-shadow:0 8px 16px rgba(0,184,148,0.18);} .b31:hover{border-style:solid; transform:translateX(3px);}
-    .b32{border:1px dashed #e17055; border-radius:22px; background:#fffaf8; box-shadow:inset 0 0 12px rgba(225,112,85,0.15);} .b32:hover{border-style:solid; transform:rotate(1.2deg);}
-    .b33{border-left:5px solid #fdcb6e; border-radius:8px; background:#fff; box-shadow:-4px 4px 12px rgba(253,203,110,0.25);} .b33:hover{transform:translateY(-3px); border-left-color:#e1b12c;}
-    .b34{border:2px groove #636e72; border-radius:14px; background:#f8f8f8; box-shadow:4px 4px 10px rgba(0,0,0,0.15);} .b34:hover{border-style:outset; background:#efefef;}
-    .b35{outline:2px solid #74b9ff; border-radius:10px 10px 20px 10px; background:linear-gradient(to bottom right,#f0f8ff,#d9ecff); box-shadow:0 6px 14px rgba(116,185,255,0.2);} .b35:hover{outline-color:#0984e3; transform:scale(1.04);}
-    .b36{border:3px solid #55efc4; border-radius:6px 20px 6px 20px; background:#fff; box-shadow:0 5px 12px rgba(85,239,196,0.25);} .b36:hover{transform:skewY(1.5deg); box-shadow:2px 7px 16px rgba(85,239,196,0.3);}
-    .b37{border-top:4px dotted #a29bfe; border-radius:16px; background:#f8f8ff; box-shadow:0 12px 22px rgba(162,155,254,0.2);} .b37:hover{border-top-color:#6c5ce7; transform:translateY(2px);}
-    .b38{border:1px solid #fdcb6e; border-radius:20px; background:linear-gradient(45deg,#fffde7,#fff9c4); box-shadow:0 4px 10px rgba(253,203,110,0.2);} .b38:hover{border-radius:10px; transform:rotate(-1.5deg);}
-    .b39{border:2px ridge #fab1a0; border-radius:8px; background:#fff; box-shadow:5px 5px 0 #ddd;} .b39:hover{transform:translate(-2px,-2px); box-shadow:2px 2px 0 #bbb;}
-    .b40{border:3px solid #e84393; border-radius:0 14px 14px 0; background:linear-gradient(135deg,#fff0f5,#ffe6ee); box-shadow:-4px 4px 14px rgba(232,67,147,0.2);} .b40:hover{transform:scale(1.02); filter:contrast(1.05);}
-
-    
-    .sm1{background:#ffd6d6; border-radius:8px; border:2px solid #ff9999; box-shadow:0 2px 4px rgba(255,150,150,0.4);} .sm1:hover{background:#ffcccc; transform:scale(1.08);}
-    .sm2{background:#d6ffd6; border-radius:20px; border:2px dashed #99cc99; box-shadow:0 3px 6px rgba(150,200,150,0.3);} .sm2:hover{transform:rotate(10deg); border-color:#66b366;}
-    .sm3{background:#d6e3ff; border-radius:4px 12px 12px 4px; border-left:3px solid #7799cc; box-shadow:inset 0 0 5px rgba(119,153,204,0.2);} .sm3:hover{padding-left:16px; border-left-width:5px;}
-    .sm4{background:#fff0b3; border:2px dotted #ccaa44; border-radius:6px; text-transform:uppercase; letter-spacing:1px; box-shadow:0 1px 3px rgba(0,0,0,0.1);} .sm4:hover{text-decoration:underline; background:#ffe880;}
-    .sm5{background:#ffd6f3; border-radius:12px 4px 12px 4px; box-shadow:0 4px 8px rgba(200,100,180,0.2); outline:2px solid #ffb3e6;} .sm5:hover{outline-color:#ff80d9; transform:translateY(-2px);}
-    .sm6{background:#d6fff7; border:1px solid #88cccc; border-radius:8px; font-style:italic; box-shadow:inset 2px 2px 4px rgba(136,204,204,0.3);} .sm6:hover{font-style:normal; background:#b3e8e8;}
-    .sm7{background:#e0ffd6; border-top:3px solid #88cc88; border-radius:6px; box-shadow:0 -2px 6px rgba(136,204,136,0.2);} .sm7:hover{border-top-color:#55aa55; transform:rotate(-2deg);}
-    .sm8{background:#ffe4d6; border-radius:6px; border:2px solid #ffb380; box-shadow:2px 2px 0 #ffb380;} .sm8:hover{box-shadow:0 0 0 #ffb380; transform:translate(2px, 2px);}
-    .sm9{background:#e6d6ff; border:1px solid #b388ff; border-radius:10px; text-shadow:0 1px 2px rgba(179,136,255,0.5);} .sm9:hover{color:#fff; background:#b388ff;}
-    .sm10{background:#d6f0ff; border:1px solid #66aaff; border-radius:25px; font-size:12px; box-shadow:0 2px 5px rgba(102,170,255,0.3);} .sm10:hover{transform:scale(1.12); box-shadow:0 4px 10px rgba(102,170,255,0.5);}
-    .sm11{background:#ffe6f2; border-radius:20px; border:2px double #ff99cc; padding:5px 10px;} .sm11:hover{border-style:solid; background:#ffd6e6;}
-    .sm12{background:#d6ffd9; border:1px solid #88ff99; border-radius:8px 8px 0 0; box-shadow:0 3px 0 #88ff99;} .sm12:hover{box-shadow:0 1px 0 #88ff99; transform:translateY(2px);}
-    .sm13{background:#f0f0ff; border:1px solid #a0a0cc; border-radius:8px; border-bottom:3px solid #8080b0;} .sm13:hover{border-bottom-width:1px; transform:translateY(2px);}
-    .sm14{background:#fff5f0; border:2px solid #ffaa88; border-radius:10px; text-align:center;} .sm14:hover{background:#ffe0cc; transform:scale(1.06);}
-    .sm15{background:#f5fff0; border:1px dashed #88cc66; border-radius:12px; box-shadow:inset 0 0 8px rgba(136,204,102,0.2);} .sm15:hover{border-style:solid; background:#e8ffe0;}
-    .sm16{background:#fffef0; border:1px solid #ddd888; border-radius:6px 14px 6px 14px; letter-spacing:0.5px;} .sm16:hover{background:#fff8d0; transform:rotate(1.5deg);}
-
-    .l1{display:flex; flex-direction:column; align-items:center; gap:5px;}
-    .l2{display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:4px;}
-    .l3{display:grid; grid-template-columns:repeat(2, 1fr); gap:5px; width:100%;}
-    .l4{display:flex; flex-direction:column; align-items:center; gap:5px;}
-
-    .sec1{background:linear-gradient(180deg,#fff8f8,#ffeaea); padding:20px; border-radius:16px; box-shadow:0 5px 20px rgba(200,130,130,0.15); border:1px solid #f5d0d0;}
-    .sec2{background:linear-gradient(180deg,#f8fff8,#eaffea); padding:20px; border-radius:16px; box-shadow:0 5px 20px rgba(130,200,130,0.15); border:1px solid #d0f5d0;}
-    .sec3{background:linear-gradient(180deg,#f8f8ff,#eaf0ff); padding:20px; border-radius:16px; box-shadow:0 5px 20px rgba(130,140,200,0.15); border:1px solid #d0d8f5;}
-    .sec4{background:linear-gradient(180deg,#fffff8,#fff7e6); padding:20px; border-radius:16px; box-shadow:0 5px 20px rgba(200,180,130,0.15); border:1px solid #f5ecd0;}
-
-   
-    .lang-switcher { position: fixed; top: 15px; right: 15px; display: flex; gap: 6px; z-index: 1000; background: rgba(255,255,255,0.9); padding: 6px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
-    .lang-btn { padding: 6px 14px; border: 2px solid #ccc; background: #fff; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 13px; transition: all 0.2s ease; }
-    .lang-btn:hover { background: #f0f0f0; }
-    .lang-btn.active { background: #2563eb; color: #fff; border-color: #2563eb; }
-  </style>
+  <title data-i18n="ui.title">Загрузка...</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-  <div class="lang-switcher">
-    <button class="lang-btn active" data-lang="ru" onclick="setLanguage('ru')" data-i18n="ui.btn_ru">RU</button>
-    <button class="lang-btn" data-lang="en" onclick="setLanguage('en')" data-i18n="ui.btn_en">EN</button>
+  <div class="toolbar">
+    <button class="ctrl active" data-dir="ltr" onclick="setDir('ltr')">LTR</button>
+    <button class="ctrl" data-dir="rtl" onclick="setDir('rtl')">RTL</button>
+    <div class="divider"></div>
+    <button class="ctrl active" data-lang="ru" onclick="setLang('ru')">RU</button>
+    <button class="ctrl" data-lang="en" onclick="setLang('en')">EN</button>
+    <button class="ctrl" data-lang="ar" onclick="setLang('ar')">AR</button>
   </div>
 
-  <h1 data-i18n="ui.main_title">Моя страница с карточками</h1>
+  <h1 data-i18n="ui.title">Моя страница с карточками</h1>
+  <input type="text" class="demo-input" placeholder="Введите текст для проверки направления..." dir="inherit">
 
-  <div class="section sec1">
-    <h2 class="section-title" data-i18n="sec.langs_tech">Языки и технологии</h2>
-    <div class="cards">
-      <div class="big b1 l1"><h3 data-i18n="card.langs">Языки</h3><div class="small sm1" data-i18n="tag.js">JavaScript</div><div class="small sm2" data-i18n="tag.py">Python</div><div class="small sm3" data-i18n="tag.java">Java</div><div class="small sm4" data-i18n="tag.cpp">C++</div></div>
-      <div class="big b2 l3"><h3 data-i18n="card.backend">Backend</h3><div class="small sm5" data-i18n="tag.node">Node.js</div><div class="small sm6" data-i18n="tag.django">Django</div><div class="small sm7" data-i18n="tag.spring">Spring</div><div class="small sm8" data-i18n="tag.express">Express</div></div>
-      <div class="big b3 l4"><h3 data-i18n="card.frontend">Frontend</h3><div class="small sm9" data-i18n="tag.react">React</div><div class="small sm10" data-i18n="tag.vue">Vue</div><div class="small sm11" data-i18n="tag.angular">Angular</div><div class="small sm12" data-i18n="tag.svelte">Svelte</div></div>
-      <div class="big b4 l2"><h3 data-i18n="card.db">Базы данных</h3><div class="small sm13" data-i18n="tag.mysql">MySQL</div><div class="small sm14" data-i18n="tag.mongo">MongoDB</div><div class="small sm15" data-i18n="tag.pg">PostgreSQL</div><div class="small sm16" data-i18n="tag.redis">Redis</div></div>
-      <div class="big b5 l1"><h3 data-i18n="card.git">Git</h3><div class="small sm1" data-i18n="tag.github">GitHub</div><div class="small sm2" data-i18n="tag.gitlab">GitLab</div><div class="small sm3" data-i18n="tag.bitbucket">Bitbucket</div><div class="small sm4" data-i18n="tag.sourcetree">SourceTree</div></div>
-      <div class="big b6 l3"><h3 data-i18n="card.http">HTTP методы</h3><div class="small sm5" data-i18n="tag.get">GET</div><div class="small sm6" data-i18n="tag.post">POST</div><div class="small sm7" data-i18n="tag.put">PUT</div><div class="small sm8" data-i18n="tag.delete">DELETE</div></div>
-      <div class="big b7 l4"><h3 data-i18n="card.arch">Архитектура</h3><div class="small sm9" data-i18n="tag.mvc">MVC</div><div class="small sm10" data-i18n="tag.mvp">MVP</div><div class="small sm11" data-i18n="tag.mvvm">MVVM</div><div class="small sm12" data-i18n="tag.clean">Clean</div></div>
-      <div class="big b8 l2"><h3 data-i18n="card.test">Тестирование</h3><div class="small sm13" data-i18n="tag.unit">Unit</div><div class="small sm14" data-i18n="tag.integration">Integration</div><div class="small sm15" data-i18n="tag.e2e">E2E</div><div class="small sm16" data-i18n="tag.mock">Mock</div></div>
-      <div class="big b9 l1"><h3 data-i18n="card.editors">Редакторы</h3><div class="small sm1" data-i18n="tag.vscode">VS Code</div><div class="small sm2" data-i18n="tag.webstorm">WebStorm</div><div class="small sm3" data-i18n="tag.intellij">IntelliJ</div><div class="small sm4" data-i18n="tag.sublime">Sublime</div></div>
-      <div class="big b10 l3"><h3 data-i18n="card.os">Операционные</h3><div class="small sm5" data-i18n="tag.linux">Linux</div><div class="small sm6" data-i18n="tag.windows">Windows</div><div class="small sm7" data-i18n="tag.macos">macOS</div><div class="small sm8" data-i18n="tag.ubuntu">Ubuntu</div></div>
+  <div class="wrap">
+    <!-- Секции с классами sec1-sec4 привязаны к темам в CSS -->
+    <div class="sec sec1">
+      <h2 class="sec-title" data-i18n="sec.langs">Языки и технологии</h2>
+      <div class="grid">
+        <div class="card b1 l1"><h3 data-i18n="c.langs">Языки</h3>
+<div class="tag sm1" data-i18n="t.js">JavaScript</div>
+<div class="tag sm2" data-i18n="t.py">Python</div>
+<div class="tag sm3" data-i18n="t.java">Java</div>
+<div class="tag sm4" data-i18n="t.cpp">C++</div></div>
+        <div class="card b2 l3"><h3 data-i18n="c.be">Backend</h3>
+<div class="tag sm5" data-i18n="t.node">Node.js</div>
+<div class="tag sm6" data-i18n="t.django">Django</div>
+<div class="tag sm7" data-i18n="t.spring">Spring</div>
+<div class="tag sm8" data-i18n="t.express">Express</div></div>
+        <div class="card b3 l4"><h3 data-i18n="c.fe">Frontend</h3>
+<div class="tag sm9" data-i18n="t.react">React</div>
+<div class="tag sm10" data-i18n="t.vue">Vue</div>
+<div class="tag sm11" data-i18n="t.ang">Angular</div>
+<div class="tag sm12" data-i18n="t.svelte">Svelte</div></div>
+        <div class="card b4 l2"><h3 data-i18n="c.db">Базы данных</h3>
+<div class="tag sm13" data-i18n="t.mysql">MySQL</div>
+<div class="tag sm14" data-i18n="t.mongo">MongoDB</div>
+<div class="tag sm15" data-i18n="t.pg">PostgreSQL</div>
+<div class="tag sm16" data-i18n="t.redis">Redis</div></div>
+        <div class="card b5 l1"><h3 data-i18n="c.git">Git</h3>
+<div class="tag sm1" data-i18n="t.gh">GitHub</div>
+<div class="tag sm2" data-i18n="t.gl">GitLab</div>
+<div class="tag sm3" data-i18n="t.bb">Bitbucket</div>
+<div class="tag sm4" data-i18n="t.st">SourceTree</div></div>
+        <div class="card b6 l3"><h3 data-i18n="c.http">HTTP методы</h3>
+<div class="tag sm5" data-i18n="t.get">GET</div>
+<div class="tag sm6" data-i18n="t.post">POST</div>
+<div class="tag sm7" data-i18n="t.put">PUT</div>
+<div class="tag sm8" data-i18n="t.del">DELETE</div></div>
+        <div class="card b7 l4"><h3 data-i18n="c.arch">Архитектура</h3>
+<div class="tag sm9" data-i18n="t.mvc">MVC</div>
+<div class="tag sm10" data-i18n="t.mvp">MVP</div>
+<div class="tag sm11" data-i18n="t.mvvm">MVVM</div>
+<div class="tag sm12" data-i18n="t.clean">Clean</div></div>
+        <div class="card b8 l2"><h3 data-i18n="c.test">Тестирование</h3>
+<div class="tag sm13" data-i18n="t.unit">Unit</div>
+<div class="tag sm14" data-i18n="t.int">Integration</div>
+<div class="tag sm15" data-i18n="t.e2e">E2E</div>
+<div class="tag sm16" data-i18n="t.mock">Mock</div></div>
+        <div class="card b9 l1"><h3 data-i18n="c.edit">Редакторы</h3>
+<div class="tag sm1" data-i18n="t.vs">VS Code</div>
+<div class="tag sm2" data-i18n="t.ws">WebStorm</div>
+<div class="tag sm3" data-i18n="t.ij">IntelliJ</div>
+<div class="tag sm4" data-i18n="t.sub">Sublime</div></div>
+        <div class="card b10 l3"><h3 data-i18n="c.os">Операционные</h3>
+<div class="tag sm5" data-i18n="t.linux">Linux</div>
+<div class="tag sm6" data-i18n="t.win">Windows</div>
+<div class="tag sm7" data-i18n="t.mac">macOS</div>
+<div class="tag sm8" data-i18n="t.ubu">Ubuntu</div></div>
+      </div>
+    </div>
+
+    <div class="sec sec2">
+      <h2 class="sec-title" data-i18n="sec.devops">DevOps</h2>
+      <div class="grid">
+        <div class="card b11 l4"><h3 data-i18n="c.cont">Контейнеры</h3>
+<div class="tag sm5" data-i18n="t.docker">Docker</div>
+<div class="tag sm6" data-i18n="t.pod">Podman</div>
+<div class="tag sm7" data-i18n="t.lxc">LXC</div>
+<div class="tag sm8" data-i18n="t.contd">Containerd</div></div>
+        <div class="card b12 l1"><h3 data-i18n="c.orch">Оркестрация</h3>
+<div class="tag sm9" data-i18n="t.k8s">Kubernetes</div>
+<div class="tag sm10" data-i18n="t.swarm">Swarm</div>
+<div class="tag sm11" data-i18n="t.os">OpenShift</div>
+<div class="tag sm12" data-i18n="t.nom">Nomad</div></div>
+        <div class="card b13 l2"><h3 data-i18n="c.cicd">CI/CD</h3>
+<div class="tag sm1" data-i18n="t.jenk">Jenkins</div>
+<div class="tag sm2" data-i18n="t.gha">GitHub Actions</div>
+<div class="tag sm3" data-i18n="t.glc">GitLab CI</div>
+<div class="tag sm4" data-i18n="t.circle">CircleCI</div></div>
+        <div class="card b14 l3"><h3 data-i18n="c.cloud">Облака</h3>
+<div class="tag sm5" data-i18n="t.aws">AWS</div>
+<div class="tag sm6" data-i18n="t.az">Azure</div>
+<div class="tag sm7" data-i18n="t.gcp">GCP</div>
+<div class="tag sm8" data-i18n="t.do">DigitalOcean</div></div>
+        <div class="card b15 l4"><h3 data-i18n="c.mon">Мониторинг</h3>
+<div class="tag sm9" data-i18n="t.prom">Prometheus</div>
+<div class="tag sm10" data-i18n="t.graf">Grafana</div>
+<div class="tag sm11" data-i18n="t.zab">Zabbix</div>
+<div class="tag sm12" data-i18n="t.dd">Datadog</div></div>
+        <div class="card b16 l1"><h3 data-i18n="c.logs">Логи</h3>
+<div class="tag sm1" data-i18n="t.elk">ELK Stack</div>
+<div class="tag sm2" data-i18n="t.flu">Fluentd</div>
+<div class="tag sm3" data-i18n="t.log">Logstash</div>
+<div class="tag sm4" data-i18n="t.kib">Kibana</div></div>
+        <div class="card b17 l2"><h3 data-i18n="c.net">Сети</h3>
+<div class="tag sm5" data-i18n="t.tcp">TCP/IP</div>
+<div class="tag sm6" data-i18n="t.udp">UDP</div>
+<div class="tag sm7" data-i18n="t.httpn">HTTP</div>
+<div class="tag sm8" data-i18n="t.https">HTTPS</div></div>
+        <div class="card b18 l3"><h3 data-i18n="c.serv">Серверы</h3>
+<div class="tag sm9" data-i18n="t.nginx">Nginx</div>
+<div class="tag sm10" data-i18n="t.ap">Apache</div>
+<div class="tag sm11" data-i18n="t.cad">Caddy</div>
+<div class="tag sm12" data-i18n="t.iis">IIS</div></div>
+        <div class="card b19 l4"><h3 data-i18n="c.scr">Скрипты</h3>
+<div class="tag sm1" data-i18n="t.bash">Bash</div>
+<div class="tag sm2" data-i18n="t.pwsh">PowerShell</div>
+<div class="tag sm3" data-i18n="t.pys">Python</div>
+<div class="tag sm4" data-i18n="t.perl">Perl</div></div>
+        <div class="card b20 l1"><h3 data-i18n="c.util">Утилиты</h3>
+<div class="tag sm5" data-i18n="t.ssh">SSH</div>
+<div class="tag sm6" data-i18n="t.ftp">FTP</div>
+<div class="tag sm7" data-i18n="t.scp">SCP</div>
+<div class="tag sm8" data-i18n="t.rsync">rsync</div></div>
+      </div>
+    </div>
+
+    <div class="sec sec3">
+      <h2 class="sec-title" data-i18n="sec.algo">Алгоритмы</h2>
+      <div class="grid">
+        <div class="card b21 l2"><h3 data-i18n="c.sort">Сортировки</h3>
+<div class="tag sm9" data-i18n="t.bub">Bubble</div>
+<div class="tag sm10" data-i18n="t.quick">Quick</div>
+<div class="tag sm11" data-i18n="t.mer">Merge</div>
+<div class="tag sm12" data-i18n="t.heap">Heap</div></div>
+        <div class="card b22 l3"><h3 data-i18n="c.search">Поиск</h3>
+<div class="tag sm1" data-i18n="t.bin">Binary</div>
+<div class="tag sm2" data-i18n="t.lin">Linear</div>
+<div class="tag sm3" data-i18n="t.dfs">DFS</div>
+<div class="tag sm4" data-i18n="t.bfs">BFS</div></div>
+        <div class="card b23 l4"><h3 data-i18n="c.struct">Структуры</h3>
+<div class="tag sm5" data-i18n="t.arr">Array</div>
+<div class="tag sm6" data-i18n="t.list">List</div>
+<div class="tag sm7" data-i18n="t.stack">Stack</div>
+<div class="tag sm8" data-i18n="t.q">Queue</div></div>
+        <div class="card b24 l1"><h3 data-i18n="c.hash">Хеши</h3>
+<div class="tag sm9" data-i18n="t.hmap">HashMap</div>
+<div class="tag sm10" data-i18n="t.hset">HashSet</div>
+<div class="tag sm11" data-i18n="t.htab">HashTable</div>
+<div class="tag sm12" data-i18n="t.key">Key</div></div>
+        <div class="card b25 l2"><h3 data-i18n="c.tree">Деревья</h3>
+<div class="tag sm1" data-i18n="t.btree">Binary</div>
+<div class="tag sm2" data-i18n="t.avl">AVL</div>
+<div class="tag sm3" data-i18n="t.rb">Red-Black</div>
+<div class="tag sm4" data-i18n="t.trie">Trie</div></div>
+        <div class="card b26 l3"><h3 data-i18n="c.graph">Графы</h3>
+<div class="tag sm5" data-i18n="t.nodes">Nodes</div>
+<div class="tag sm6" data-i18n="t.edges">Edges</div>
+<div class="tag sm7" data-i18n="t.w">Weight</div>
+<div class="tag sm8" data-i18n="t.path">Path</div></div>
+        <div class="card b27 l4"><h3 data-i18n="c.comp">Сложность</h3>
+<div class="tag sm9" data-i18n="t.o1">O(1)</div>
+<div class="tag sm10" data-i18n="t.on">O(n)</div>
+<div class="tag sm11" data-i18n="t.log">O(log n)</div>
+<div class="tag sm12" data-i18n="t.o2">O(n²)</div></div>
+        <div class="card b28 l1"><h3 data-i18n="c.rec">Рекурсия</h3>
+<div class="tag sm1" data-i18n="t.cstack">Call Stack</div>
+<div class="tag sm2" data-i18n="t.base">Base Case</div>
+<div class="tag sm3" data-i18n="t.recur">Recursive</div>
+<div class="tag sm4" data-i18n="t.ret">Return</div></div>
+        <div class="card b29 l2"><h3 data-i18n="c.greed">Жадные</h3>
+<div class="tag sm5" data-i18n="t.cho">Choice</div>
+<div class="tag sm6" data-i18n="t.lopt">Local Opt</div>
+<div class="tag sm7" data-i18n="t.gopt">Global Opt</div>
+<div class="tag sm8" data-i18n="t.fast">Fast</div></div>
+        <div class="card b30 l3"><h3 data-i18n="c.misc">Разное</h3>
+<div class="tag sm9" data-i18n="t.dyn">Dynamic</div>
+<div class="tag sm10" data-i18n="t.memo">Memoization</div>
+<div class="tag sm11" data-i18n="t.cache">Cache</div>
+<div class="tag sm12" data-i18n="t.state">State</div></div>
+      </div>
+    </div>
+
+    <div class="sec sec4">
+      <h2 class="sec-title" data-i18n="sec.web">Web</h2>
+      <div class="grid">
+        <div class="card b31 l4"><h3 data-i18n="c.wfe">Frontend</h3>
+<div class="tag sm1" data-i18n="t.html">HTML5</div>
+<div class="tag sm2" data-i18n="t.css">CSS3</div>
+<div class="tag sm3" data-i18n="t.jsd">JavaScript</div>
+<div class="tag sm4" data-i18n="t.dom">DOM</div></div>
+        <div class="card b32 l1"><h3 data-i18n="c.fw">Фреймворки</h3>
+<div class="tag sm5" data-i18n="t.rfe">React</div>
+<div class="tag sm6" data-i18n="t.vuej">Vue.js</div>
+<div class="tag sm7" data-i18n="t.angf">Angular</div>
+<div class="tag sm8" data-i18n="t.svel">Svelte</div></div>
+        <div class="card b33 l2"><h3 data-i18n="c.wbe">Backend</h3>
+<div class="tag sm9" data-i18n="t.nodw">Node.js</div>
+<div class="tag sm10" data-i18n="t.djw">Django</div>
+<div class="tag sm11" data-i18n="t.spw">Spring</div>
+<div class="tag sm12" data-i18n="t.lar">Laravel</div></div>
+        <div class="card b34 l3"><h3 data-i18n="c.api">API</h3>
+<div class="tag sm1" data-i18n="t.rest">REST</div>
+<div class="tag sm2" data-i18n="t.gql">GraphQL</div>
+<div class="tag sm3" data-i18n="t.ws">WebSocket</div>
+<div class="tag sm4" data-i18n="t.grpc">gRPC</div></div>
+        <div class="card b35 l4"><h3 data-i18n="c.auth">Авторизация</h3>
+<div class="tag sm5" data-i18n="t.jwt">JWT</div>
+<div class="tag sm6" data-i18n="t.oauth">OAuth 2.0</div>
+<div class="tag sm7" data-i18n="t.sess">Session</div>
+<div class="tag sm8" data-i18n="t.cook">Cookies</div></div>
+        <div class="card b36 l1"><h3 data-i18n="c.sec">Безопасность</h3>
+<div class="tag sm9" data-i18n="t.tls">TLS/SSL</div>
+<div class="tag sm10" data-i18n="t.cors">CORS</div>
+<div class="tag sm11" data-i18n="t.xss">XSS</div>
+<div class="tag sm12" data-i18n="t.csrf">CSRF</div></div>
+        <div class="card b37 l2"><h3 data-i18n="c.cssw">CSS</h3>
+<div class="tag sm1" data-i18n="t.flex">Flexbox</div>
+<div class="tag sm2" data-i18n="t.grid">Grid</div>
+<div class="tag sm3" data-i18n="t.mq">Media Query</div>
+<div class="tag sm4" data-i18n="t.resp">Responsive</div></div>
+        <div class="card b38 l3"><h3 data-i18n="c.build">Сборка</h3>
+<div class="tag sm5" data-i18n="t.webp">Webpack</div>
+<div class="tag sm6" data-i18n="t.vite">Vite</div>
+<div class="tag sm7" data-i18n="t.par">Parcel</div>
+<div class="tag sm8" data-i18n="t.roll">Rollup</div></div>
+        <div class="card b39 l4"><h3 data-i18n="c.wtest">Тесты Web</h3>
+<div class="tag sm9" data-i18n="t.jest">Jest</div>
+<div class="tag sm10" data-i18n="t.moch">Mocha</div>
+<div class="tag sm11" data-i18n="t.chai">Chai</div>
+<div class="tag sm12" data-i18n="t.vit">Vitest</div></div>
+        <div class="card b40 l1"><h3 data-i18n="c.other">Прочее</h3>
+<div class="tag sm1" data-i18n="t.seo">SEO</div>
+<div class="tag sm2" data-i18n="t.ssr">SSR</div>
+<div class="tag sm3" data-i18n="t.spa">SPA</div>
+<div class="tag sm4" data-i18n="t.pwa">PWA</div></div>
+      </div>
     </div>
   </div>
 
-  <div class="section sec2">
-    <h2 class="section-title" data-i18n="sec.devops">DevOps</h2>
-    <div class="cards">
-      <div class="big b11 l4"><h3 data-i18n="card.containers">Контейнеры</h3><div class="small sm5" data-i18n="tag.docker">Docker</div><div class="small sm6" data-i18n="tag.podman">Podman</div><div class="small sm7" data-i18n="tag.lxc">LXC</div><div class="small sm8" data-i18n="tag.containerd">Containerd</div></div>
-      <div class="big b12 l1"><h3 data-i18n="card.orch">Оркестрация</h3><div class="small sm9" data-i18n="tag.k8s">Kubernetes</div><div class="small sm10" data-i18n="tag.swarm">Swarm</div><div class="small sm11" data-i18n="tag.openshift">OpenShift</div><div class="small sm12" data-i18n="tag.nomad">Nomad</div></div>
-      <div class="big b13 l2"><h3 data-i18n="card.cicd">CI/CD</h3><div class="small sm1" data-i18n="tag.jenkins">Jenkins</div><div class="small sm2" data-i18n="tag.gh_actions">GitHub Actions</div><div class="small sm3" data-i18n="tag.gl_ci">GitLab CI</div><div class="small sm4" data-i18n="tag.circleci">CircleCI</div></div>
-      <div class="big b14 l3"><h3 data-i18n="card.cloud">Облака</h3><div class="small sm5" data-i18n="tag.aws">AWS</div><div class="small sm6" data-i18n="tag.azure">Azure</div><div class="small sm7" data-i18n="tag.gcp">GCP</div><div class="small sm8" data-i18n="tag.do">DigitalOcean</div></div>
-      <div class="big b15 l4"><h3 data-i18n="card.monitor">Мониторинг</h3><div class="small sm9" data-i18n="tag.prometheus">Prometheus</div><div class="small sm10" data-i18n="tag.grafana">Grafana</div><div class="small sm11" data-i18n="tag.zabbix">Zabbix</div><div class="small sm12" data-i18n="tag.datadog">Datadog</div></div>
-      <div class="big b16 l1"><h3 data-i18n="card.logs">Логи</h3><div class="small sm1" data-i18n="tag.elk">ELK Stack</div><div class="small sm2" data-i18n="tag.fluentd">Fluentd</div><div class="small sm3" data-i18n="tag.logstash">Logstash</div><div class="small sm4" data-i18n="tag.kibana">Kibana</div></div>
-      <div class="big b17 l2"><h3 data-i18n="card.network">Сети</h3><div class="small sm5" data-i18n="tag.tcp">TCP/IP</div><div class="small sm6" data-i18n="tag.udp">UDP</div><div class="small sm7" data-i18n="tag.http_net">HTTP</div><div class="small sm8" data-i18n="tag.https">HTTPS</div></div>
-      <div class="big b18 l3"><h3 data-i18n="card.servers">Серверы</h3><div class="small sm9" data-i18n="tag.nginx">Nginx</div><div class="small sm10" data-i18n="tag.apache">Apache</div><div class="small sm11" data-i18n="tag.caddy">Caddy</div><div class="small sm12" data-i18n="tag.iis">IIS</div></div>
-      <div class="big b19 l4"><h3 data-i18n="card.scripts">Скрипты</h3><div class="small sm1" data-i18n="tag.bash">Bash</div><div class="small sm2" data-i18n="tag.powershell">PowerShell</div><div class="small sm3" data-i18n="tag.python_script">Python</div><div class="small sm4" data-i18n="tag.perl">Perl</div></div>
-      <div class="big b20 l1"><h3 data-i18n="card.utils">Утилиты</h3><div class="small sm5" data-i18n="tag.ssh">SSH</div><div class="small sm6" data-i18n="tag.ftp">FTP</div><div class="small sm7" data-i18n="tag.scp">SCP</div><div class="small sm8" data-i18n="tag.rsync">rsync</div></div>
-    </div>
-  </div>
-
-  <div class="section sec3">
-    <h2 class="section-title" data-i18n="sec.algorithms">Алгоритмы</h2>
-    <div class="cards">
-      <div class="big b21 l2"><h3 data-i18n="card.sorting">Сортировки</h3><div class="small sm9" data-i18n="tag.bubble">Bubble</div><div class="small sm10" data-i18n="tag.quick">Quick</div><div class="small sm11" data-i18n="tag.merge">Merge</div><div class="small sm12" data-i18n="tag.heap">Heap</div></div>
-      <div class="big b22 l3"><h3 data-i18n="card.search">Поиск</h3><div class="small sm1" data-i18n="tag.binary">Binary</div><div class="small sm2" data-i18n="tag.linear">Linear</div><div class="small sm3" data-i18n="tag.dfs">DFS</div><div class="small sm4" data-i18n="tag.bfs">BFS</div></div>
-      <div class="big b23 l4"><h3 data-i18n="card.structures">Структуры</h3><div class="small sm5" data-i18n="tag.array">Array</div><div class="small sm6" data-i18n="tag.list">List</div><div class="small sm7" data-i18n="tag.stack">Stack</div><div class="small sm8" data-i18n="tag.queue">Queue</div></div>
-      <div class="big b24 l1"><h3 data-i18n="card.hashes">Хеши</h3><div class="small sm9" data-i18n="tag.hashmap">HashMap</div><div class="small sm10" data-i18n="tag.hashset">HashSet</div><div class="small sm11" data-i18n="tag.hashtable">HashTable</div><div class="small sm12" data-i18n="tag.key">Key</div></div>
-      <div class="big b25 l2"><h3 data-i18n="card.trees">Деревья</h3><div class="small sm1" data-i18n="tag.binary_tree">Binary</div><div class="small sm2" data-i18n="tag.avl">AVL</div><div class="small sm3" data-i18n="tag.rb">Red-Black</div><div class="small sm4" data-i18n="tag.trie">Trie</div></div>
-      <div class="big b26 l3"><h3 data-i18n="card.graphs">Графы</h3><div class="small sm5" data-i18n="tag.nodes">Nodes</div><div class="small sm6" data-i18n="tag.edges">Edges</div><div class="small sm7" data-i18n="tag.weight">Weight</div><div class="small sm8" data-i18n="tag.path">Path</div></div>
-      <div class="big b27 l4"><h3 data-i18n="card.complexity">Сложность</h3><div class="small sm9" data-i18n="tag.o1">O(1)</div><div class="small sm10" data-i18n="tag.on">O(n)</div><div class="small sm11" data-i18n="tag.ologn">O(log n)</div><div class="small sm12" data-i18n="tag.on2">O(n²)</div></div>
-      <div class="big b28 l1"><h3 data-i18n="card.recursion">Рекурсия</h3><div class="small sm1" data-i18n="tag.callstack">Call Stack</div><div class="small sm2" data-i18n="tag.basecase">Base Case</div><div class="small sm3" data-i18n="tag.recursive">Recursive</div><div class="small sm4" data-i18n="tag.return">Return</div></div>
-      <div class="big b29 l2"><h3 data-i18n="card.greedy">Жадные</h3><div class="small sm5" data-i18n="tag.choice">Choice</div><div class="small sm6" data-i18n="tag.localopt">Local Opt</div><div class="small sm7" data-i18n="tag.globalopt">Global Opt</div><div class="small sm8" data-i18n="tag.fast">Fast</div></div>
-      <div class="big b30 l3"><h3 data-i18n="card.misc">Разное</h3><div class="small sm9" data-i18n="tag.dynamic">Dynamic</div><div class="small sm10" data-i18n="tag.memo">Memoization</div><div class="small sm11" data-i18n="tag.cache">Cache</div><div class="small sm12" data-i18n="tag.state">State</div></div>
-    </div>
-  </div>
-
-  <div class="section sec4">
-    <h2 class="section-title" data-i18n="sec.web">Web</h2>
-    <div class="cards">
-      <div class="big b31 l4"><h3 data-i18n="card.web_frontend">Frontend</h3><div class="small sm1" data-i18n="tag.html5">HTML5</div><div class="small sm2" data-i18n="tag.css3">CSS3</div><div class="small sm3" data-i18n="tag.js_dom">JavaScript</div><div class="small sm4" data-i18n="tag.dom">DOM</div></div>
-      <div class="big b32 l1"><h3 data-i18n="card.frameworks">Фреймворки</h3><div class="small sm5" data-i18n="tag.react_f">React</div><div class="small sm6" data-i18n="tag.vuejs">Vue.js</div><div class="small sm7" data-i18n="tag.angular_f">Angular</div><div class="small sm8" data-i18n="tag.svelte_f">Svelte</div></div>
-      <div class="big b33 l2"><h3 data-i18n="card.web_backend">Backend</h3><div class="small sm9" data-i18n="tag.node_w">Node.js</div><div class="small sm10" data-i18n="tag.django_w">Django</div><div class="small sm11" data-i18n="tag.spring_w">Spring</div><div class="small sm12" data-i18n="tag.laravel">Laravel</div></div>
-      <div class="big b34 l3"><h3 data-i18n="card.api">API</h3><div class="small sm1" data-i18n="tag.rest">REST</div><div class="small sm2" data-i18n="tag.graphql">GraphQL</div><div class="small sm3" data-i18n="tag.ws">WebSocket</div><div class="small sm4" data-i18n="tag.grpc">gRPC</div></div>
-      <div class="big b35 l4"><h3 data-i18n="card.auth">Авторизация</h3><div class="small sm5" data-i18n="tag.jwt">JWT</div><div class="small sm6" data-i18n="tag.oauth">OAuth 2.0</div><div class="small sm7" data-i18n="tag.session">Session</div><div class="small sm8" data-i18n="tag.cookies">Cookies</div></div>
-      <div class="big b36 l1"><h3 data-i18n="card.security">Безопасность</h3><div class="small sm9" data-i18n="tag.tls">TLS/SSL</div><div class="small sm10" data-i18n="tag.cors">CORS</div><div class="small sm11" data-i18n="tag.xss">XSS</div><div class="small sm12" data-i18n="tag.csrf">CSRF</div></div>
-      <div class="big b37 l2"><h3 data-i18n="card.css">CSS</h3><div class="small sm1" data-i18n="tag.flexbox">Flexbox</div><div class="small sm2" data-i18n="tag.grid">Grid</div><div class="small sm3" data-i18n="tag.media">Media Query</div><div class="small sm4" data-i18n="tag.responsive">Responsive</div></div>
-      <div class="big b38 l3"><h3 data-i18n="card.build">Сборка</h3><div class="small sm5" data-i18n="tag.webpack">Webpack</div><div class="small sm6" data-i18n="tag.vite">Vite</div><div class="small sm7" data-i18n="tag.parcel">Parcel</div><div class="small sm8" data-i18n="tag.rollup">Rollup</div></div>
-      <div class="big b39 l4"><h3 data-i18n="card.web_test">Тесты Web</h3><div class="small sm9" data-i18n="tag.jest">Jest</div><div class="small sm10" data-i18n="tag.mocha">Mocha</div><div class="small sm11" data-i18n="tag.chai">Chai</div><div class="small sm12" data-i18n="tag.vitest">Vitest</div></div>
-      <div class="big b40 l1"><h3 data-i18n="card.other">Прочее</h3><div class="small sm1" data-i18n="tag.seo">SEO</div><div class="small sm2" data-i18n="tag.ssr">SSR</div><div class="small sm3" data-i18n="tag.spa">SPA</div><div class="small sm4" data-i18n="tag.pwa">PWA</div></div>
-    </div>
-  </div>
-
-  <script>
-    
-    const i18n = {
-      ru: {
-        ui: { page_title: "Моя страница с карточками", btn_ru: "RU", btn_en: "EN", main_title: "Моя страница с карточками" },
-        sec: { langs_tech: "Языки и технологии", devops: "DevOps", algorithms: "Алгоритмы", web: "Web" },
-        card: { langs: "Языки", backend: "Backend", frontend: "Frontend", db: "Базы данных", git: "Git", http: "HTTP методы", arch: "Архитектура", test: "Тестирование", editors: "Редакторы", os: "Операционные", containers: "Контейнеры", orch: "Оркестрация", cicd: "CI/CD", cloud: "Облака", monitor: "Мониторинг", logs: "Логи", network: "Сети", servers: "Серверы", scripts: "Скрипты", utils: "Утилиты", sorting: "Сортировки", search: "Поиск", structures: "Структуры", hashes: "Хеши", trees: "Деревья", graphs: "Графы", complexity: "Сложность", recursion: "Рекурсия", greedy: "Жадные", misc: "Разное", web_frontend: "Frontend", frameworks: "Фреймворки", web_backend: "Backend", api: "API", auth: "Авторизация", security: "Безопасность", css: "CSS", build: "Сборка", web_test: "Тесты Web", other: "Прочее" },
-        tag: { js: "JavaScript", py: "Python", java: "Java", cpp: "C++", node: "Node.js", django: "Django", spring: "Spring", express: "Express", react: "React", vue: "Vue", angular: "Angular", svelte: "Svelte", mysql: "MySQL", mongo: "MongoDB", pg: "PostgreSQL", redis: "Redis", github: "GitHub", gitlab: "GitLab", bitbucket: "Bitbucket", sourcetree: "SourceTree", get: "GET", post: "POST", put: "PUT", delete: "DELETE", mvc: "MVC", mvp: "MVP", mvvm: "MVVM", clean: "Clean", unit: "Unit", integration: "Integration", e2e: "E2E", mock: "Mock", vscode: "VS Code", webstorm: "WebStorm", intellij: "IntelliJ", sublime: "Sublime", linux: "Linux", windows: "Windows", macos: "macOS", ubuntu: "Ubuntu", docker: "Docker", podman: "Podman", lxc: "LXC", containerd: "Containerd", k8s: "Kubernetes", swarm: "Swarm", openshift: "OpenShift", nomad: "Nomad", jenkins: "Jenkins", gh_actions: "GitHub Actions", gl_ci: "GitLab CI", circleci: "CircleCI", aws: "AWS", azure: "Azure", gcp: "GCP", do: "DigitalOcean", prometheus: "Prometheus", grafana: "Grafana", zabbix: "Zabbix", datadog: "Datadog", elk: "ELK Stack", fluentd: "Fluentd", logstash: "Logstash", kibana: "Kibana", tcp: "TCP/IP", udp: "UDP", http_net: "HTTP", https: "HTTPS", nginx: "Nginx", apache: "Apache", caddy: "Caddy", iis: "IIS", bash: "Bash", powershell: "PowerShell", python_script: "Python", perl: "Perl", ssh: "SSH", ftp: "FTP", scp: "SCP", rsync: "rsync", bubble: "Bubble", quick: "Quick", merge: "Merge", heap: "Heap", binary: "Binary", linear: "Linear", dfs: "DFS", bfs: "BFS", array: "Array", list: "List", stack: "Stack", queue: "Queue", hashmap: "HashMap", hashset: "HashSet", hashtable: "HashTable", key: "Key", binary_tree: "Binary", avl: "AVL", rb: "Red-Black", trie: "Trie", nodes: "Nodes", edges: "Edges", weight: "Weight", path: "Path", o1: "O(1)", on: "O(n)", ologn: "O(log n)", on2: "O(n²)", callstack: "Call Stack", basecase: "Base Case", recursive: "Recursive", return: "Return", choice: "Choice", localopt: "Local Opt", globalopt: "Global Opt", fast: "Fast", dynamic: "Dynamic", memo: "Memoization", cache: "Cache", state: "State", html5: "HTML5", css3: "CSS3", js_dom: "JavaScript", dom: "DOM", react_f: "React", vuejs: "Vue.js", angular_f: "Angular", svelte_f: "Svelte", node_w: "Node.js", django_w: "Django", spring_w: "Spring", laravel: "Laravel", rest: "REST", graphql: "GraphQL", ws: "WebSocket", grpc: "gRPC", jwt: "JWT", oauth: "OAuth 2.0", session: "Session", cookies: "Cookies", tls: "TLS/SSL", cors: "CORS", xss: "XSS", csrf: "CSRF", flexbox: "Flexbox", grid: "Grid", media: "Media Query", responsive: "Responsive", webpack: "Webpack", vite: "Vite", parcel: "Parcel", rollup: "Rollup", jest: "Jest", mocha: "Mocha", chai: "Chai", vitest: "Vitest", seo: "SEO", ssr: "SSR", spa: "SPA", pwa: "PWA" }
-      },
-      en: {
-        ui: { page_title: "My Cards Page", btn_ru: "RU", btn_en: "EN", main_title: "My Cards Page" },
-        sec: { langs_tech: "Languages & Tech", devops: "DevOps", algorithms: "Algorithms", web: "Web" },
-        card: { langs: "Languages", backend: "Backend", frontend: "Frontend", db: "Databases", git: "Version Control", http: "HTTP Methods", arch: "Architecture", test: "Testing", editors: "Editors/IDEs", os: "Operating Systems", containers: "Containers", orch: "Orchestration", cicd: "CI/CD", cloud: "Cloud Providers", monitor: "Monitoring", logs: "Logging", network: "Networking", servers: "Servers", scripts: "Scripting", utils: "Utilities", sorting: "Sorting", search: "Search", structures: "Data Structures", hashes: "Hashing", trees: "Trees", graphs: "Graphs", complexity: "Complexity", recursion: "Recursion", greedy: "Greedy", misc: "Miscellaneous", web_frontend: "Frontend", frameworks: "Frameworks", web_backend: "Backend", api: "APIs", auth: "Authentication", security: "Security", css: "CSS", build: "Bundlers", web_test: "Web Testing", other: "Other" },
-        tag: { js: "JavaScript", py: "Python", java: "Java", cpp: "C++", node: "Node.js", django: "Django", spring: "Spring", express: "Express", react: "React", vue: "Vue", angular: "Angular", svelte: "Svelte", mysql: "MySQL", mongo: "MongoDB", pg: "PostgreSQL", redis: "Redis", github: "GitHub", gitlab: "GitLab", bitbucket: "Bitbucket", sourcetree: "SourceTree", get: "GET", post: "POST", put: "PUT", delete: "DELETE", mvc: "MVC", mvp: "MVP", mvvm: "MVVM", clean: "Clean", unit: "Unit", integration: "Integration", e2e: "E2E", mock: "Mock", vscode: "VS Code", webstorm: "WebStorm", intellij: "IntelliJ", sublime: "Sublime", linux: "Linux", windows: "Windows", macos: "macOS", ubuntu: "Ubuntu", docker: "Docker", podman: "Podman", lxc: "LXC", containerd: "Containerd", k8s: "Kubernetes", swarm: "Swarm", openshift: "OpenShift", nomad: "Nomad", jenkins: "Jenkins", gh_actions: "GitHub Actions", gl_ci: "GitLab CI", circleci: "CircleCI", aws: "AWS", azure: "Azure", gcp: "GCP", do: "DigitalOcean", prometheus: "Prometheus", grafana: "Grafana", zabbix: "Zabbix", datadog: "Datadog", elk: "ELK Stack", fluentd: "Fluentd", logstash: "Logstash", kibana: "Kibana", tcp: "TCP/IP", udp: "UDP", http_net: "HTTP", https: "HTTPS", nginx: "Nginx", apache: "Apache", caddy: "Caddy", iis: "IIS", bash: "Bash", powershell: "PowerShell", python_script: "Python", perl: "Perl", ssh: "SSH", ftp: "FTP", scp: "SCP", rsync: "rsync", bubble: "Bubble", quick: "Quick", merge: "Merge", heap: "Heap", binary: "Binary", linear: "Linear", dfs: "DFS", bfs: "BFS", array: "Array", list: "List", stack: "Stack", queue: "Queue", hashmap: "HashMap", hashset: "HashSet", hashtable: "HashTable", key: "Key", binary_tree: "Binary", avl: "AVL", rb: "Red-Black", trie: "Trie", nodes: "Nodes", edges: "Edges", weight: "Weight", path: "Path", o1: "O(1)", on: "O(n)", ologn: "O(log n)", on2: "O(n²)", callstack: "Call Stack", basecase: "Base Case", recursive: "Recursive", return: "Return", choice: "Choice", localopt: "Local Opt", globalopt: "Global Opt", fast: "Fast", dynamic: "Dynamic", memo: "Memoization", cache: "Cache", state: "State", html5: "HTML5", css3: "CSS3", js_dom: "JavaScript", dom: "DOM", react_f: "React", vuejs: "Vue.js", angular_f: "Angular", svelte_f: "Svelte", node_w: "Node.js", django_w: "Django", spring_w: "Spring", laravel: "Laravel", rest: "REST", graphql: "GraphQL", ws: "WebSocket", grpc: "gRPC", jwt: "JWT", oauth: "OAuth 2.0", session: "Session", cookies: "Cookies", tls: "TLS/SSL", cors: "CORS", xss: "XSS", csrf: "CSRF", flexbox: "Flexbox", grid: "Grid", media: "Media Query", responsive: "Responsive", webpack: "Webpack", vite: "Vite", parcel: "Parcel", rollup: "Rollup", jest: "Jest", mocha: "Mocha", chai: "Chai", vitest: "Vitest", seo: "SEO", ssr: "SSR", spa: "SPA", pwa: "PWA" }
-      }
-    };
-
-    
-    function setLanguage(lang) {
-      if (!i18n[lang]) return;
-      const dict = i18n[lang];
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const keys = el.getAttribute('data-i18n').split('.');
-        let value = dict;
-        for (const k of keys) {
-          value = value?.[k];
-          if (!value) break;
-        }
-        if (value) el.textContent = value;
-      });
-      localStorage.setItem('lang', lang);
-      document.documentElement.lang = lang;
-      document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.lang === lang);
-      });
-    }
-
-    
-    document.addEventListener('DOMContentLoaded', () => {
-      const saved = localStorage.getItem('lang') || 'ru';
-      setLanguage(saved);
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
