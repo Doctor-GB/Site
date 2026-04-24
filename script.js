@@ -1,63 +1,96 @@
-// script.js
-const LANG_DIR = 'lang/';
-const CACHE_KEY = 'app_prefs';
+const appContainer = document.getElementById('app')
 
-async function loadLang(lang) {
+async function initApp() {
   try {
-    const res = await fetch(`${LANG_DIR}${lang}.json`);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return await res.json();
-  } catch (err) {
-    console.error('Translation load failed:', err);
-    return null;
+    const res = await fetch('data.json')
+    if (!res.ok) throw new Error('HTTP ' + res.status)
+    const data = await response.json()
+    renderSections(data.sections)
+  } 
+  catch (error) {
+    console.error('Ошибка загрузки:', error)
+    appContainer.innerHTML = '<p>Не удалось загрузить данные.</p>'
   }
 }
 
-function applyTranslations(data) {
-  if (!data) return;
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const [ns, key] = el.dataset.i18n.split('.');
-    if (data[ns]?.[key]) el.textContent = data[ns][key];
+function renderSections(sections) {
+  appContainer.innerHTML = ''
+
+  sections.forEach(section => {
+    const secEl = document.createElement('div')
+    secEl.className = 'sec ' + section.themeClass
+
+    const titleEl = document.createElement('h2')
+    titleEl.className = 'sec-title'
+    titleEl.textContent = section.sectionTitle;
+
+    const gridEl = document.createElement('div')
+    gridEl.className = 'grid'
+
+    section.cards.forEach(cardData => {
+      gridEl.appendChild(createCard(cardData))
+    });
+
+    secEl.appendChild(titleEl)
+    secEl.appendChild(gridEl)
+    appContainer.appendChild(secEl)
   });
 }
 
-function setLang(lang) {
-  loadLang(lang).then(data => {
-    if (data) {
-      applyTranslations(data);
-      document.documentElement.lang = lang;
-      // Авто-RTL для арабского
-      const isRTL = lang === 'ar';
-      document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
-      updateControls('lang', lang);
-      savePref('lang', lang);
-    }
-  });
+function createCard(data) {
+  const card = document.createElement('div')
+  card.className = 'card ' + (data.cardClass || '')
+
+  const h3 = document.createElement('h3');
+  h3.textContent = data.title
+
+  const tagsWrap = document.createElement('div')
+  tagsWrap.style.display = 'flex'
+  tagsWrap.style.flexWrap = 'wrap'
+  tagsWrap.style.justifyContent = 'center'
+  tagsWrap.style.gap = '0.25rem'
+
+  data.tags.forEach(text => {
+    const span = document.createElement('span')
+    span.className = 'tag'
+    span.textContent = text
+    tagsWrap.appendChild(span)
+  })
+
+  card.appendChild(h3)
+  card.appendChild(tagsWrap)
+  return card
+}
+
+function changeBaseColor(variable, value) {
+  document.documentElement.style.setProperty(variable, value)
+  localStorage.setItem('theme_' + variable, value)
 }
 
 function setDir(dir) {
-  document.documentElement.dir = dir;
-  updateControls('dir', dir);
-  savePref('dir', dir);
-}
-
-function updateControls(type, value) {
-  document.querySelectorAll(`.ctrl[data-${type}]`).forEach(btn => {
-    btn.classList.toggle('active', btn.dataset[type] === value);
+  document.documentElement.dir = dir
+  document.querySelectorAll('.ctrl[data-dir]').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.dir === dir)
   });
-}
+  localStorage.setItem('dir', dir)
 
-function savePref(key, value) {
-  const prefs = JSON.parse(localStorage.getItem(CACHE_KEY) || '{}');
-  prefs[key] = value;
-  localStorage.setItem(CACHE_KEY, JSON.stringify(prefs));
-}
 
 function loadPrefs() {
-  const prefs = JSON.parse(localStorage.getItem(CACHE_KEY) || '{}');
-  setLang(prefs.lang || 'ru');
-  setDir(prefs.dir || 'ltr');
+  const savedDir = localStorage.getItem('dir') || 'ltr'
+  setDir(savedDir)
+
+  ['--base-primary', '--base-secondary', '--base-accent', '--base-warning', '--base-error'].forEach(v => {
+    const saved = localStorage.getItem('theme_' + v)
+    if (saved) {
+      document.documentElement.style.setProperty(v, saved)
+      const input = document.querySelector(`input[onchange*="${v}"]`)
+      if (input) input.value = saved
+    }
+  })
 }
 
-// Init
-document.addEventListener('DOMContentLoaded', loadPrefs);
+document.addEventListener('DOMContentLoaded', () => {
+  loadPrefs()
+  initApp()
+})
+
