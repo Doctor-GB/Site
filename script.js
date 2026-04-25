@@ -1,5 +1,3 @@
-// script.js
-
 const appContainer = document.getElementById('app');
 
 async function initApp() {
@@ -54,45 +52,45 @@ function createCard(data) {
   tagsWrap.style.gap = '0.25rem';
 
   data.tags.forEach(text => {
-    const span = document.createElement('span')
-    span.className = 'tag'
-    span.textContent = text
-    tagsWrap.appendChild(span)
+    const span = document.createElement('span');
+    span.className = 'tag';
+    span.textContent = text;
+    tagsWrap.appendChild(span);
   });
 
-  card.appendChild(h3)
-  card.appendChild(tagsWrap)
-  return card
+  card.appendChild(h3);
+  card.appendChild(tagsWrap);
+  return card;
 }
 
 function changeBaseColor(variable, value) {
-  document.documentElement.style.setProperty(variable, value)
-  localStorage.setItem('theme_' + variable, value)
+  document.documentElement.style.setProperty(variable, value);
+  localStorage.setItem('theme_' + variable, value);
 }
 
 function setDir(dir) {
-  document.documentElement.dir = dir
+  document.documentElement.dir = dir;
   document.querySelectorAll('.ctrl[data-dir]').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.dir === dir)
-  })
-  localStorage.setItem('dir', dir)
+    btn.classList.toggle('active', btn.dataset.dir === dir);
+  });
+  localStorage.setItem('dir', dir);
 }
 
 function loadPrefs() {
-  const savedDir = localStorage.getItem('dir') || 'ltr'
-  setDir(savedDir)
-  
+  const savedDir = localStorage.getItem('dir') || 'ltr';
+  setDir(savedDir);
+
   ['--base-primary', '--base-secondary', '--base-accent', '--base-warning', '--base-error'].forEach(v => {
-    const saved = localStorage.getItem('theme_' + v)
+    const saved = localStorage.getItem('theme_' + v);
     if (saved) {
-      document.documentElement.style.setProperty(v, saved)
-      const input = document.querySelector(`input[onchange*="${v}"]`)
+      document.documentElement.style.setProperty(v, saved);
+      const input = document.querySelector(`input[onchange*="${v}"]`);
       if (input) input.value = saved;
     }
-  })
+  });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   loadPrefs();
   initApp();
-})
+});
